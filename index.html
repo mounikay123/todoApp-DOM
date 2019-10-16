@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+<input type="text" placeholder="add users" id="userText"/> &nbsp;
+<button id="addButton"
+        onclick="adduser()">ADD
+</button>
+<button id="updateButton" onclick="updateUser()">UPDATE</button>
+
+<div id="usersList">
+
+</div>
+
+<script>
+    let users = ["jhon", "doe"];
+    let indexToUpdate = null;
+
+    document.getElementById("updateButton").style.display = "none";
+
+    function displayUsersList() {
+
+        let displayUsers = "<ul>";
+        users.map((user, index) => {
+            displayUsers += `<li> ${user} <button onclick="editUser(${index})">Edit </button> <button onclick="deleteUser(${index})">delete</button> </li>`
+        });
+        displayUsers += "</ul>";
+        document.getElementById("usersList").innerHTML = displayUsers;
+
+    }
+
+    displayUsersList();
+
+    function adduser() {
+        let text = document.getElementById("userText").value;
+
+        if (!text) {
+            alert("plese enter some thing")
+        } else if (users.includes(text)) {
+            alert("user already exists")
+        } else {
+            users.push(text);
+        }
+
+        document.getElementById("userText").value = ""
+
+        displayUsersList();
+
+    }
+
+    function deleteUser(index) {
+
+        users.splice(index, 1);
+
+        displayUsersList();
+    }
+
+    function editUser(index) {
+
+        indexToUpdate = index;
+
+        document.getElementById("userText").value = users[index];
+        document.getElementById("addButton").style.display = "none";
+        document.getElementById("updateButton").style.display = "inline";
+
+    }
+
+    function updateUser() {
+
+        users.splice(indexToUpdate, 1, document.getElementById("userText").value);
+        document.getElementById("addButton").style.display = "inline";
+        document.getElementById("updateButton").style.display = "none";
+        indexToUpdate = null;
+        displayUsersList();
+        document.getElementById("userText").value = "";
+
+    };
+
+</script>
+
+</body>
+
+</html>

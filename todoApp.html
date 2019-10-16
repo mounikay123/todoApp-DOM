@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{
+            overflow: hidden;
+        }
+        .tab{
+            float:left
+        }
+        .tab-2{
+            margin-left:217px;
+        }
+        .tab-2 input{
+            display: block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<script>
+    var table=document.getElementById("table");
+    console.log(table);
+    function add(){
+        var newRow=table.insertRow(table.length),
+            cell1=newRow.insertCell(0),
+            cell2=newRow.insertCell(1),
+            cell3=newRow.insertCell(2),
+            fName=document.getElementById("fName").value,
+            lName=document.getElementById("lName").value,
+            age=document.getElementById("age").value;
+        cell1.innerHTML= fName;
+        cell2.innerHTML= lName;
+        cell3.innerHTML= age;
+        selectedRow()
+    }
+    function selectedRow(){
+        console.log(table);
+        for(let i=1; i<table.rows.length; i++){
+            table.rows[i].onclick=function(){
+                rIndex=this.rowIndex;
+                console.log(rIndex);
+                document.getElementById('fName').value=this.cells[0].innerHTML;
+                document.getElementById('lName').value=this.cells[1].innerHTML;
+                document.getElementById('age').value=this.cells[2].innerHTML;
+            }
+        }
+    }
+    selectedRow();
+    function edit(){
+        var fName=document.getElementById("fName").value,
+            lName=document.getElementById("lName").value,
+            age=document.getElementById("age").value;
+        table.rows[rIndex].cells[0].innerHTML=fName;
+        table.rows[rIndex].cells[1].innerHTML=lName;
+        table.rows[rIndex].cells[2].innerHTML=age;
+    }
+    function remove(){
+        table.deleteRow(rIndex);
+    }
+
+</script>
+<div class="container">
+    <table id="table">
+        <thead>
+        <tr>
+            <th>firstName</th>
+            <th>lastName</th>
+            <th>age</th>
+        </tr>
+        </thead>
+    </table>
+
+        <div class="tab-2">
+            firstName:<input  type="text" placeholder="firstName" id="fName" />
+            lastName:<input  type="text" placeholder="lastName" id="lName" />
+            age:<input  type="number" placeholder="age" id="age" />
+            <button onclick="add()">add</button>
+            <button onclick="edit()">edit</button>
+            <button onclick="remove()">
+                remove</button>
+        </div>
+
+    </div>
+
+</body>
+</html>

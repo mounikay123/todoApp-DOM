@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="dom.js"></script>
+
+</head>
+
+<body>
+<script>
+    let names=[];
+    let upadteValue=null;
+    document.getElementById("update").style.display="none";
+
+    function displayUsersList(){
+        let ulElement='<ul>';
+        names.map(function(v,index){
+            ulElement +=`<li> ${v}</li> <button type="button" onclick="edit(${index})" >edit</button> <button type="button" onclick="remove(${index})"  >delete</button>`
+        });
+        ulElement += "</ul>";
+        document.getElementById("usersList").innerHTML = ulElement;
+
+    }
+    displayUsersList();
+    function add(){
+        var addedElement=document.getElementById("name").value;
+
+        if(!addedElement){
+            window.alert("please enter something")
+        }
+        else if(names.includes(addedElement)){
+            window.alert("please enter new name")
+        }
+        else{
+            names.push(addedElement);
+
+        }
+        document.getElementById("name").value = "";
+        displayUsersList()
+    }
+
+    function edit(index){
+        upadteValue=index;
+        document.getElementById("name").value = names[index];
+        document.getElementById("add").style.display ="none";
+        document.getElementById("update").style.display = "inline";
+
+    }
+  function remove(index){
+
+        names.splice(index,1);
+        displayUsersList()
+    }
+
+    function update() {
+
+        names.splice(upadteValue, 1, document.getElementById("name").value);
+        document.getElementById("add").style.display = "inline";
+        document.getElementById("update").style.display = "none";
+        upadteValue = null;
+        displayUsersList();
+        document.getElementById("name").value = "";
+
+    }
+
+</script>
+
+<input type="text" id="name" placeholder="enter name" />
+<button id="add" type="button" onclick="add()">
+    add
+</button>
+<button  id="update" type="button"  onclick="update()">
+    update
+</button>
+
+<div id="usersList">
+
+</div>
+
+</body>
+</html>
